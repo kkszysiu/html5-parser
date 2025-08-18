@@ -1206,7 +1206,7 @@ static void reconstruct_active_formatting_elements(GumboParser* parser) {
 
 static void clear_active_formatting_elements(GumboParser* parser) {
   GumboVector* elements = &parser->_parser_state->_active_formatting_elements;
-  int num_elements_cleared = 0;
+  int num_elements_cleared __attribute__((unused)) = 0;
   const GumboNode* node;
   do {
     node = gumbo_vector_pop(elements);

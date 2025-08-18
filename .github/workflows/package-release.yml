@@ -26,7 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install wheel twine
         pip install twine flake8 
-        pip install --upgrade --no-binary lxml lxml
+        pip install --upgrade --no-binary lxml lxml==5.4.0
     - name: Build Python package
       run: |
         python setup.py sdist bdist_wheel

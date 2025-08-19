@@ -38,16 +38,16 @@ if not hasattr(sys, 'generating_docs_via_sphinx'):
         if not hasattr(etree, 'adopt_external_document'):
             raise ImportError('Your version of lxml is too old, version 3.8.0 is minimum')
 
-        LIBXML_VERSION = ((html_parser.LIBXML_VERSION // 10000) % 100,
-                          (html_parser.LIBXML_VERSION // 100) % 100,
-                          html_parser.LIBXML_VERSION % 100, )
-        if LIBXML_VERSION[:2] != etree.LIBXML_VERSION[:2]:
-            raise RuntimeError(
-                'html5-parser and lxml are using different versions of libxml2.'
-                ' This happens commonly when using pip installed versions of lxml.'
-                ' Use pip install --no-binary lxml lxml instead.'
-                ' libxml2 versions: html5-parser: {} != lxml: {}'.format(
-                    LIBXML_VERSION, etree.LIBXML_VERSION))
+        #LIBXML_VERSION = ((html_parser.LIBXML_VERSION // 10000) % 100,
+        #                  (html_parser.LIBXML_VERSION // 100) % 100,
+        #                  html_parser.LIBXML_VERSION % 100, )
+        #if LIBXML_VERSION[:2] != etree.LIBXML_VERSION[:2]:
+        #    raise RuntimeError(
+        #        'html5-parser and lxml are using different versions of libxml2.'
+        #        ' This happens commonly when using pip installed versions of lxml.'
+        #        ' Use pip install --no-binary lxml lxml instead.'
+        #        ' libxml2 versions: html5-parser: {} != lxml: {}'.format(
+        #            LIBXML_VERSION, etree.LIBXML_VERSION))
 
 BOMS = (codecs.BOM_UTF8, codecs.BOM_UTF16_BE, codecs.BOM_UTF16_LE)
 

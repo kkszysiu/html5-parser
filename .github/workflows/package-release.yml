@@ -32,7 +32,7 @@ jobs:
     - name: Build static libxml2
       run: |
         if [ "$RUNNER_OS" == "Linux" ]; then
-          wget http://xmlsoft.org/sources/libxml2-2.13.8.tar.xz
+          wget https://download.gnome.org/sources/libxml2/2.13/libxml2-2.13.8.tar.xz
           tar -xf libxml2-2.13.8.tar.xz
           cd libxml2-2.13.8
           ./configure --disable-shared --enable-static --prefix=/usr/local

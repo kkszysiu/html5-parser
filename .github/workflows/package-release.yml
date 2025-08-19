@@ -26,7 +26,7 @@ jobs:
     - name: Build wheels
       run: python -m cibuildwheel --output-dir wheelhouse
       env:
-        CIBW_ENVIRONMENT_LINUX: "PKG_CONFIG_PATH=/usr/local/lib/pkgconfig LDFLAGS=-L/usr/local/lib CPPFLAGS=-I/usr/local/include LXML_STATIC_LIBS=1 STATIC_DEPS=true"
+        CIBW_ENVIRONMENT_LINUX: "PKG_CONFIG_PATH=/usr/local/lib/pkgconfig LDFLAGS=-L/usr/local/lib CPPFLAGS=-I/usr/local/include CFLAGS=-fPIC CXXFLAGS=-fPIC LXML_STATIC_LIBS=1 STATIC_DEPS=true"
         CIBW_BEFORE_BUILD_LINUX: "pip install --no-binary lxml lxml==5.4.0"
         CIBW_ARCHS: "x86_64"
 #    - name: Install dependencies

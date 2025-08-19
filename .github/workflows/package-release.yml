@@ -41,7 +41,7 @@ jobs:
 
           wget https://download.gnome.org/sources/libxslt/1.1/libxslt-1.1.43.tar.xz
           tar -xf libxslt-1.1.43.tar.xz
-          cd ../libxslt-1.1.43
+          cd libxslt-1.1.43
           ./configure --disable-shared --enable-static --prefix=/usr/local --without-python
           make -j$(nproc)
           sudo make install

@@ -1,21 +1,27 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "html5-parser"
-version = "0.4.12"
+name = "rm-html5-parser"
+version = "0.4.14"
 authors = [
-    {name = "Kovid Goyal", email = "redacted@acme.com"},
+    {name = "Kris", email = "kris@rebelmouse.com"},
 ]
-description = "Fast C based HTML 5 parsing for python"
+description = "Fast C based HTML 5 parsing for python, fork of Kovid Goyal html5-parser"
 license = "Apache-2.0"
+readme = "README.rst"
+requires-python = ">=3.11"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Text Processing",
     "Topic :: Text Processing :: Markup",
     "Topic :: Text Processing :: Markup :: HTML",
@@ -23,7 +29,7 @@ classifiers = [
 ]
 dependencies = [
     "chardet",
-    "lxml>=3.8.0",
+    "lxml>=6.0.2",
 ]
 
 [project.urls]
@@ -35,3 +41,18 @@ soup = ["beautifulsoup4"]
 [tool.setuptools]
 package-dir = {"" = "src"}
 packages = ["html5_parser"]
+
+[tool.setuptools.package-data]
+html5_parser = ["py.typed"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+
+[tool.isort]
+combine_as_imports = true
+line_length = 100
+multi_line_output = 5
+known_future_library = ["__python__"]

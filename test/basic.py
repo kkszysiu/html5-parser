@@ -12,15 +12,13 @@ from html5_parser import check_for_meta_charset, html_parser, parse, check_bom, 
 
 class BasicTests(TestCase):
     def test_lxml_integration(self):
-        capsule = html_parser.parse(b'<p id=1>xxx')
-        root = etree.adopt_external_document(capsule).getroot()
+        root = parse(b'<p id=1>xxx')
         self.ae(list(root.iterchildren('body')), list(root.xpath('./body')))
         self.ae(root.find('body/p').text, 'xxx')
         self.ae(root.xpath('//@id'), ['1'])
         # Test that lxml is not copying the doc internally
         root.set('attr', 'abc')
-        cap2 = html_parser.clone_doc(capsule)
-        root2 = etree.adopt_external_document(cap2).getroot()
+        root2 = parse(tostring(root))
         self.ae(tostring(root), tostring(root2))
 
     def test_stack(self):

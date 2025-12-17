@@ -380,6 +380,12 @@ def parse(
         from lxml.html import HTMLParser
         interpreter = HTMLParser()
     ans = etree.adopt_external_document(capsule, parser=interpreter)
+    # Workaround for lxml 6.0+ where the parser name dict is parser-local.
+    # Re-setting each element's tag ensures it's registered in lxml's internal
+    # dictionary, making iter(tag) and iterdescendants(tag) work correctly.
+    # Only process actual elements (skip comments, processing instructions, etc.)
+    for elem in ans.iter(etree.Element):
+        elem.tag = elem.tag
     if treebuilder in ('lxml', 'lxml_html'):
         return ans.getroot() if return_root else ans
     m = importlib.import_module('html5_parser.' + treebuilder)

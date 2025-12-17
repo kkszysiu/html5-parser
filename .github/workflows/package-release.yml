@@ -33,38 +33,6 @@ jobs:
         CIBW_BEFORE_BUILD_MACOS: "brew install libxml2 libxslt && pip install --no-binary lxml lxml==6.0.2"
         CIBW_ARCHS_LINUX: "x86_64 aarch64"
         CIBW_ARCHS_MACOS: "x86_64 universal2 arm64"
-#    - name: Install dependencies
-#      run: |
-#        python -m pip install --upgrade pip
-#        pip install wheel twine setuptools
-#        if [ "$RUNNER_OS" == "Linux" ]; then
-#          export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
-#          export LDFLAGS="-L/usr/local/lib"
-#          export CPPFLAGS="-I/usr/local/include"
-#          # Force static linking of libxml2/libxslt while keeping the Python extension as shared
-#          export LXML_STATIC_LIBS="1"
-#          STATIC_DEPS=true pip install --upgrade --no-binary lxml lxml==5.4.0
-#        elif [ "$RUNNER_OS" == "macOS" ]; then
-#          export LDFLAGS="-L/usr/local/lib"
-#          export CPPFLAGS="-I/usr/local/include"
-#          STATIC_DEPS=true pip install --upgrade --no-binary lxml lxml==5.4.0
-#        fi
-#      shell: bash
-#    - name: Build Python package
-#      run: |
-#        python setup.py sdist bdist_wheel
-#    - name: Twine check
-#      run: |
-#        twine check dist/*
-#    - name: Publish artifacts
-#      uses: svenstaro/upload-release-action@v2
-#      with:
-#        repo_token: ${{ secrets.GITHUB_TOKEN }}
-#        file: dist/*.whl
-#        tag: ${{ github.ref }}
-#        overwrite: true
-#        file_glob: true
-#
     - uses: actions/upload-artifact@v4
       with:
         name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}

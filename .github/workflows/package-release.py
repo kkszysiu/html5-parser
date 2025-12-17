@@ -25,7 +25,7 @@ def install_deps():
         pass
     else:
         run('sudo apt-get update')
-        run('sudo apt-get install -y libxml2-dev libxslt-dev')
+        run('sudo apt-get install -y libc6-dev libxml2-dev libxslt-dev')
     deps = 'chardet lxml==6.0.0 beautifulsoup4'.split()
     run(sys.executable, '-m', 'pip', 'install', '--no-binary', 'lxml', *deps)
     run(sys.executable, '-c', 'from lxml import etree; print(etree)')

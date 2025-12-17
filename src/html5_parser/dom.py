@@ -2,18 +2,11 @@
 # vim:fileencoding=utf-8
 # License: Apache 2.0 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
-
 from xml.dom.minidom import getDOMImplementation
 
 from lxml.etree import _Comment
 
 impl = getDOMImplementation()
-
-try:
-    dict_items = dict.iteritems  # type: ignore
-except AttributeError:
-    dict_items = dict.items
 
 
 def elem_name_parts(elem):
@@ -30,7 +23,7 @@ def attr_name_parts(name, elem, val):
     if name.startswith('{'):
         uri, _, name = name.rpartition('}')
         uri = uri[1:]
-        for prefix, quri in dict_items(elem.nsmap):
+        for prefix, quri in elem.nsmap.items():
             if quri == uri:
                 break
         else:
@@ -48,8 +41,8 @@ def add_namespace_declarations(src, dest):
         if p is not None:
             # Only add namespace declarations different from the parent's
             p = p.nsmap or {}
-            changed = {k: v for k, v in dict_items(changed) if v != p.get(k)}
-        for prefix, uri in dict_items(changed):
+            changed = {k: v for k, v in changed.items() if v != p.get(k)}
+        for prefix, uri in changed.items():
             attr = ('xmlns:' + prefix) if prefix else 'xmlns'
             dest.setAttributeNS('xmlns', attr, uri)
 

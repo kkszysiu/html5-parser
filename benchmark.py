@@ -2,29 +2,20 @@
 # vim:fileencoding=utf-8
 # License: Apache 2.0 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
-
 import argparse
 import textwrap
 from functools import partial
+from time import monotonic
+from urllib.request import urlopen
 
 import html5_parser
 import html5lib
 from bs4 import BeautifulSoup
 
-try:
-    from time import monotonic
-except ImportError:
-    from time import time as monotonic
-
 TF = 'test/large.html'
 try:
     raw = open(TF, 'rb').read()
 except Exception:
-    try:
-        from urllib.request import urlopen
-    except ImportError:
-        from urllib import urlopen
     print('Downloading large HTML file...')
     raw = urlopen('https://www.w3.org/TR/html5/single-page.html').read()
     open(TF, 'wb').write(raw)

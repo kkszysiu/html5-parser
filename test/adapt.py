@@ -2,11 +2,6 @@
 # vim:fileencoding=utf-8
 # License: Apache 2.0 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
-
-import importlib
-import sys
-
 from html5_parser import parse
 
 from . import SVG, XHTML, XLINK, TestCase
@@ -44,8 +39,7 @@ class AdaptTest(TestCase):
         self.ae(svg.attrib, {'viewBox': 'v'})
         img = svg[0]
         self.ae(img.attrib, {'{%s}href' % XLINK: 'h'})
-        if sys.version_info.major > 2:
-            self.assertIn('<!--' + COMMENT + '-->', tostring(root).decode('ascii'))
+        self.assertIn('<!--' + COMMENT + '-->', tostring(root).decode('ascii'))
 
     def test_dom(self):
         root = parse(HTML, treebuilder='dom', namespace_elements=True)
@@ -74,28 +68,16 @@ class AdaptTest(TestCase):
         self.ae(root.lastChild.nodeValue, COMMENT.replace('--', '\u2014'))
 
     def test_soup(self):
-        from html5_parser.soup import set_soup_module
-        soups = []
-        for soup in 'bs4 BeautifulSoup'.split():
-            try:
-                soups.append((soup, importlib.import_module(soup)))
-            except ImportError:
-                pass
-        if not soups:
+        try:
+            import bs4
+        except ImportError:
             self.skipTest('No BeautifulSoup module found')
-        for soup_name, soup in soups:
-            set_soup_module(soup)
-            self.do_soup_test(soup_name)
-        set_soup_module(None)
-
-    def do_soup_test(self, soup_name):
         root = parse(HTML, treebuilder='soup')
         soup = root.parent
-        if soup_name != 'BeautifulSoup':
-            # In BS 4+, Doctype instances only store their contents. They get
-            # formatted as `<!DOCTYPE {}>` when the whole soup is serialized.
-            parsed_doctype = str(soup).split('\n', 1)[0]
-            self.ae(DOCTYPE, parsed_doctype)
+        # In BS 4+, Doctype instances only store their contents. They get
+        # formatted as `<!DOCTYPE {}>` when the whole soup is serialized.
+        parsed_doctype = str(soup).split('\n', 1)[0]
+        self.ae(DOCTYPE, parsed_doctype)
         self.ae(root.name, 'html')
         self.ae(dict(root.attrs), {'xml:lang': 'en', 'lang': 'en'})
         self.ae(dict(root.body.contents[-1].attrs), {'xml:lang': 'de'})

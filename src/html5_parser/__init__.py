@@ -2,8 +2,6 @@
 # vim:fileencoding=utf-8
 # License: Apache 2.0 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
-
 import codecs
 import importlib
 import sys
@@ -111,10 +109,6 @@ def as_utf8(bytes_or_unicode, transport_encoding=None, fallback_encoding=None):
                     if encoding == 'x-user-defined':
                         # https://encoding.spec.whatwg.org/#x-user-defined
                         buf = (b if b <= 0x7F else 0xF780 + b - 0x80 for b in bytearray(data))
-                        try:
-                            chr = unichr
-                        except NameError:
-                            pass
                         data = ''.join(map(chr, buf))
                     else:
                         data = data.decode(encoding).encode('utf-8')

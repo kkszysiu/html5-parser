@@ -2,10 +2,6 @@
 # vim:fileencoding=utf-8
 # License: Apache 2.0 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
-
-unicode = type('')
-
 cdata_list_attributes = None
 universal_cdata_list_attributes = None
 empty = ()
@@ -33,12 +29,8 @@ def map_list_attributes(tag_name, name, val):
 
 def soup_module():
     if soup_module.ans is None:
-        try:
-            import bs4
-            soup_module.ans = bs4
-        except ImportError:
-            import BeautifulSoup as bs3  # type:ignore
-            soup_module.ans = bs3
+        import bs4
+        soup_module.ans = bs4
     return soup_module.ans
 
 
@@ -75,54 +67,13 @@ def bs4_new_tag(Tag, soup):
     return new_tag
 
 
-def bs3_fast_append(self, newChild):
-    newChild.parent = self
-    if self.contents:
-        previousChild = self.contents[-1]
-        newChild.previousSibling = previousChild
-        previousChild.nextSibling = newChild
-        newChild.previous = previousChild._lastRecursiveChild()
-    else:
-        newChild.previousSibling = None
-        newChild.previous = self
-    newChild.previous.next = newChild
-
-    newChild.nextSibling = newChild.next_element = None
-    self.contents.append(newChild)
-
-
-def bs3_new_tag(Tag, soup):
-
-    def new_tag(name, attrs):
-        ans = Tag(soup, name)
-        ans.attrs = attrs.items()
-        ans.attrMap = attrs
-        return ans
-
-    return new_tag
-
-
-VOID_ELEMENTS = frozenset(
-    'area base br col embed hr img input keygen link menuitem meta param source track wbr'.split())
-
-
-def is_bs3():
-    return soup_module().__version__.startswith('3.')
-
-
 def init_soup():
     bs = soup_module()
-    if is_bs3():
-        soup = bs.BeautifulSoup()
-        new_tag = bs3_new_tag(bs.Tag, soup)
-        append = bs3_fast_append
-        soup.isSelfClosing = lambda self, name: name in VOID_ELEMENTS
-    else:
-        soup = bs.BeautifulSoup('', 'lxml')
-        new_tag = bs4_new_tag(bs.Tag, soup)
-        append = bs4_fast_append
-        if universal_cdata_list_attributes is None:
-            init_bs4_cdata_list_attributes()
+    soup = bs.BeautifulSoup('', 'lxml')
+    new_tag = bs4_new_tag(bs.Tag, soup)
+    append = bs4_fast_append
+    if universal_cdata_list_attributes is None:
+        init_bs4_cdata_list_attributes()
     return bs, soup, new_tag, bs.Comment, append, bs.NavigableString
 
 

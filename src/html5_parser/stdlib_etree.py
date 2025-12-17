@@ -2,16 +2,9 @@
 # vim:fileencoding=utf-8
 # License: Apache 2.0 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
-
-import sys
+from xml.etree.ElementTree import Comment, Element, ElementTree, SubElement, register_namespace
 
 from lxml.etree import _Comment
-
-if sys.version_info.major < 3:
-    from xml.etree.cElementTree import Element, SubElement, ElementTree, Comment, register_namespace
-else:
-    from xml.etree.ElementTree import Element, SubElement, ElementTree, Comment, register_namespace
 
 
 register_namespace('svg', "http://www.w3.org/2000/svg")

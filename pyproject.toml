@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rm-html5-parser"
-version = "0.4.14"
+version = "0.4.16"
 authors = [
     {name = "Kris", email = "kris@rebelmouse.com"},
 ]

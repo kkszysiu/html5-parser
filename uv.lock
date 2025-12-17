@@ -4,7 +4,7 @@ requires-python = ">=3.11"
 
 [[package]]
 name = "beautifulsoup4"
-version = "4.14.3"
+version = "0.4.16"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "soupsieve" },

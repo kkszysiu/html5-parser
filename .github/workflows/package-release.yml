@@ -29,7 +29,7 @@ jobs:
       env:
         CIBW_SKIP: "*-musllinux* cp38-* cp39-* cp310-*"
         CIBW_ENABLE: "cpython-prerelease"
-        CIBW_ENVIRONMENT_LINUX: "PKG_CONFIG_PATH=/usr/local/lib/pkgconfig LDFLAGS=-L/usr/local/lib CPPFLAGS=-I/usr/local/include CFLAGS=-Wno-error=incompatible-pointer-types"
+        CIBW_ENVIRONMENT_LINUX: "PKG_CONFIG_PATH=/usr/local/lib/pkgconfig LDFLAGS=-L/usr/local/lib CPPFLAGS=-I/usr/local/include CFLAGS=\"-Wno-error=incompatible-pointer-types -fPIC\" CXXFLAGS=\"-Wno-error=incompatible-pointer-types -fPIC\""
         CIBW_ENVIRONMENT_MACOS: "CFLAGS=-Wno-error=incompatible-pointer-types"
         CIBW_BEFORE_BUILD_LINUX: "yum install -y libxml2-devel libxslt-devel && pip install --no-binary lxml lxml==6.0.2"
         CIBW_BEFORE_BUILD_MACOS: "brew install libxml2 libxslt && pip install --no-binary lxml lxml==6.0.2"
